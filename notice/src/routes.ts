@@ -6,8 +6,11 @@ import {
   getNoticeById,
   updateNotice,
 } from "./services/noticeServices";
+import { getIncomingNotices } from "./services/pushServices";
 
 const noticeRoute = express.Router();
+
+noticeRoute.get("/push", getIncomingNotices);
 
 noticeRoute.get("/", getAllNotices);
 noticeRoute.get("/:id", getNoticeById);
