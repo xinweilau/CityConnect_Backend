@@ -24,6 +24,30 @@ services:
     volumes:
       - auth-data:/var/lib/postgresql/data
 
+  # Authentication Microservice
+  notice-app:
+    build:
+      context: ./notice # Path to the folder containing the Notice microservice's Dockerfile
+    ports:
+      - "3001:3001" # Expose port 3000 on the host
+    depends_on:
+      - notice-db
+    environment:
+      PORT: 3001
+      NODE_ENV: production
+      DATABASE_URL: postgres://notice_user:notice_password@notice-db/notice_db
+
+  # PostgreSQL Database for Authentication Microservice
+  notice-db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: notice_user
+      POSTGRES_PASSWORD: notice_password
+      POSTGRES_DB: notice_db
+    volumes:
+      - notice-data:/var/lib/postgresql/data
+
 volumes:
   auth-data: # Persistent volume for Authentication Microservice database
-  # notice-data: # Persistent volume for Notice Microservice database
+  notice-data: # Persistent volume for Notice Microservice database
