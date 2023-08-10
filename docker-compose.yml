@@ -1,0 +1,29 @@
+version: "3"
+services:
+  # Authentication Microservice
+  auth-app:
+    build:
+      context: ./auth # Path to the folder containing the Auth microservice's Dockerfile
+    ports:
+      - "3000:3000" # Expose port 3000 on the host
+    depends_on:
+      - auth-db
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      DATABASE_URL: postgres://auth_user:auth_password@auth-db/auth_db
+
+  # PostgreSQL Database for Authentication Microservice
+  auth-db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_db
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+
+volumes:
+  auth-data: # Persistent volume for Authentication Microservice database
+  # notice-data: # Persistent volume for Notice Microservice database
