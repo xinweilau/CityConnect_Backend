@@ -15,6 +15,12 @@ export const mockAuthenticateUser = async (req: Request, res: Response) => {
     return res.status(404).send("User with id not found");
   }
 
-  const token = jwt.sign(user, process.env.JWT_SALT, { expiresIn: "3d" });
+  const token = jwt.sign(
+    {
+      ...user.dataValues,
+    },
+    process.env.JWT_SALT,
+    { expiresIn: "3d" }
+  );
   return res.status(200).send({ token });
 };
