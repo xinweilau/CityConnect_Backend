@@ -12,6 +12,7 @@ services:
       PORT: 3000
       NODE_ENV: production
       DATABASE_URL: postgres://auth_user:auth_password@auth-db/auth_db
+      JWT_SALT: SOME_SALT_VALUE
 
   # PostgreSQL Database for Authentication Microservice
   auth-db:
