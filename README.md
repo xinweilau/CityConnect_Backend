@@ -1,6 +1,8 @@
 # Getting Started
 
-Run the following command:
+1. Open `docker-compose.yml` and update the respective environment values (e.g., JWT_SALT)
+
+2. Run the following command:
 
 ```bash
 docker-compose up --build
